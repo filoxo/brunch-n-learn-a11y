@@ -1,0 +1,178 @@
+# Accessibility
+
+---
+
+# Principle 1
+
+<p className="text-5xl">Gain empathy</p>
+
+---
+
+<iframe
+  id="reddit-embed"
+  src="https://www.redditmedia.com/r/nextfuckinglevel/comments/hy7pbf/how_apple_help_blind_people_in_using_iphone/?ref_source=embed&amp;ref=share&amp;embed=true&amp;theme=dark"
+  sandbox="allow-scripts allow-same-origin allow-popups"
+  style={{ border: "none" }}
+  height="620"
+  width="640"
+  scrolling="no"
+></iframe>
+
+---
+
+# Principle 2
+
+<p className="text-5xl">Learn & Practice</p>
+
+---
+
+import Tweet from "./tweet1.png";
+
+<a href="https://twitter.com/GuyHickling/status/1134577897086341120">
+  <img
+    src={Tweet}
+    alt="If I open a restaurant I must obey food hygiene law. If I start a business building cars I must comply with automobile safety laws. So why should commercial website developers not have to comply with accessibility law and leave their clients to carry the can? #accessibility #a11y"
+  />
+</a>
+
+---
+
+# Terminology
+
+| Acronym | Term                                                   | Definition                                                                                                                                                                                            |
+| ------- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| a11y    | <Appear>Accessibility</Appear>                         | Web sites, tools, and technologies are designed and developed so that people with disabilities can perceive, understand, navigate, and interact with the Web. Defined by international web standards. |
+| AT      | <Appear>Assistive Technology</Appear>                  | any equipment, software, or product system that is used to increase, maintain, or improve the functional capabilities of persons with disabilities.                                                   |
+| SR      | <Appear>Screen reader</Appear>                         | An assistive technology, primarily used by people with vision impairments. It converts text, buttons, images and other screen elements into speech or braille.                                        |
+| TTS     | <Appear>Text to Speech</Appear>                        | A form of SR                                                                                                                                                                                          |
+| ARIA    | <Appear>Accessible Rich Internet Applications</Appear> | set of attributes that make web content and web applications (especially those developed with JavaScript) more accessible. It supplements HTML so that interactions and state can be surfaced to AT.  |
+| WCAG    | <Appear>Web Content Accessibility Guidelines</Appear>  | Standards on how to make web content more accessible to people with disabilities.                                                                                                                     |
+
+---
+
+# Practice 1: Custom button
+
+```jsx
+import { handleKeyboardClick } from "./utils";
+
+function CustomButton({ onClick, children }) {
+  const onKeyDown = handleKeyboardClick(onClick);
+  return (
+    <button role="button" tabindex="0" onClick={onClick} onKeyDown={onKeyDown}>
+      {children}
+    </div>
+  );
+}
+```
+
+<Appear>
+
+\* What about `aria-pressed`?
+
+</Appear>
+
+---
+
+# Practice 2: Forms
+
+```jsx
+function MyForm() {
+  const handleUsername = (e) => {
+    /* ... */
+  };
+  const handlePassword = (e) => {
+    /* ... */
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Do the thing
+  };
+  return (
+    <form submit={handleSubmit}>
+      <h1>Login</h1>
+      <label htmlFor="username">Username</label>
+      <input id="username" onChange={handleUsername} />
+      <label>
+        <span>Password</span>
+        <input onChange={handlePassword} type="password" />
+      </label>
+      <div>
+        <button type="button">Submit</button>
+      </div>
+    </form>
+  );
+}
+```
+
+1. Why doesn't the second label need `htmlFor`?
+1. What benefits does an associated label provide?
+1. What is the default `button` type?
+
+---
+
+# Practice 3: CSS-in-JS
+
+```jsx
+const CustomButton = styled.button`
+  background: lightgrey;
+  ${({ width = "auto", isDisabled = false, isPressed }) => {
+    let styles = `width: ${width};`;
+    if (disabled) styles += "opacity: 0.6; ";
+    if (isPressed) styles += "background: darkgrey;";
+    return style;
+  }}
+`;
+```
+
+```jsx
+const OtherCustomButton = styled.button`
+  background: lightgrey;
+  ${({ width = "auto" }) => `width: ${width};`}
+  :disabled {
+    opacity: 0.6;
+  }
+  &[aria-pressed="true"] {
+    background: darkgrey;
+  }
+`;
+```
+
+---
+
+# Principle 3: Just do it
+
+- Keep learning and sharing
+  - https://www.w3.org/TR/wai-aria-practices-1.1/
+  - https://developers.google.com/web/fundamentals/accessibility/a11y-for-teams
+  - https://www.punchkick.com/user-research/user-experience/2019/05/28/designing-for-accessibility
+  - https://www.a11yproject.com/
+  - https://marcysutton.com/web-accessibility-resources
+  - https://www.deque.com/blog/accessibility-tips-in-single-page-applications/
+  - Videos
+    - [Demonstration of aria-live](https://www.youtube.com/watch?v=i4gvwKeN1GI)
+    - [Eric Bailey, The intersection of accessibility and performance (#PerfMatters 2019)](https://www.youtube.com/watch?v=EGKNN4MVLq8)
+- Put in practice
+- Investigate tools
+  - Chrome Devtools
+  - aXe
+  - eslint-plugin-jsx-a11y
+  - https://accessibilityinsights.io/
+
+---
+
+# POP QUIZ
+
+# Terminology
+
+|      |                                                        |
+| ---- | ------------------------------------------------------ |
+| a11y | <Appear>Accessibility</Appear>                         |
+| AT   | <Appear>Assistive Technology</Appear>                  |
+| SR   | <Appear>Screen reader</Appear>                         |
+| TTS  | <Appear>Text to Speech</Appear>                        |
+| ARIA | <Appear>Accessible Rich Internet Applications</Appear> |
+| WCAG | <Appear>Web Content Accessibility Guidelines</Appear>  |
+
+---
+
+# Thank you!
